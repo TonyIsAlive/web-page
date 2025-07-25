@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pepperony X-Pense Tracker</title>
+    <!-- Favicon -->
+    <link rel="icon" href="https://img.icons8.com/clouds/100/iron-man.png" type="image/png">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter (for body text) and Orbitron (for title) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Custom CSS for background, animations, and font */
+        body {
+            font-family: 'Inter', sans-serif; /* Apply Inter font */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            overflow-y: auto;
+            position: relative;
+            color: white;
+            min-height: 100vh; /* Use min-height to allow content to expand */
+            background-color: #1a202c; /* Dark background color */
+        }
+
+        /* Background overlay with blur and gradient */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://wallpaperaccess.com/full/2330443.jpg'); /* Tony Stark background image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(4px); /* Increased blur for a softer background */
+            z-index: -1;
+            opacity: 0.6; /* Slight transparency for the background image */
+            /* Subtle background animation */
+            animation: backgroundPan 60s linear infinite alternate, backgroundZoom 60s ease-in-out infinite alternate, backgroundOpacity 60s linear infinite alternate;
+        }
+
+        @keyframes backgroundPan {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        @keyframes backgroundZoom {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes backgroundOpacity {
+            0% { opacity: 0.6; }
+            50% { opacity: 0.7; }
+            100% { opacity: 0.6; }
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(26, 32, 44, 0.8) 0%, rgba(26, 32, 44, 0.95) 100%); /* Dark gradient overlay */
+            z-index: -1;
+        }
+
+        /* Keyframe animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Apply animations to elements */
+        .animate-fadeIn { animation: fadeIn 1s ease-out forwards; }
+        .animate-slideInUp { animation: slideInUp 0.8s ease-out forwards; }
+        .animate-scaleIn { animation: scaleIn 0.6s ease-out forwards; }
+
+        /* Delay animations for staggered effect */
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-600 { animation-delay: 0.6s; }
+        .delay-800 { animation-delay: 0.8s; }
+        .delay-900 { animation-delay: 0.9s; }
+        .delay-1000 { animation-delay: 1s; }
+        .delay-1100 { animation-delay: 1.1s; }
+        .delay-1200 { animation-delay: 1.2s; }
+        .delay-1300 { animation-delay: 1.3s; }
+        .delay-1400 { animation-delay: 1.4s; }
+        .delay-1500 { animation-delay: 1.5s; }
+        .delay-1600 { animation-delay: 1.6s; }
+        .delay-1700 { animation-delay: 1.7s; }
+        .delay-1800 { animation-delay: 1.8s; }
+        .delay-1900 { animation-delay: 1.9s; }
+        .delay-2000 { animation-delay: 2s; }
+
+        /* Arc Reactor Particles Animation */
+        @keyframes floatAndFade {
+            0% {
+                transform: translate(var(--translate-x-start, 0), var(--translate-y-start, 0)) scale(1.0); /* Start visible and large */
+                opacity: 0.4; /* Increased start visibility */
+            }
+            50% {
+                transform: translate(var(--translate-x), var(--translate-y)) scale(1.2); /* Peak large and visible */
+                opacity: 0.8; /* Increased peak visibility */
+            }
+            100% {
+                transform: translate(var(--translate-x-end), var(--translate-y-end)) scale(1.0); /* End visible and large */
+                opacity: 0.4; /* Increased end visibility */
+            }
+        }
+
+        .arc-reactor-particle {
+            position: absolute;
+            font-size: 5rem; /* Increased default size */
+            color: #00bcd4; /* Arc Reactor blue color */
+            opacity: 0.4; /* Default initial opacity to be present */
+            pointer-events: none;
+            animation: floatAndFade infinite ease-in-out;
+            text-shadow: 0 0 10px #00bcd4, 0 0 20px #00bcd4, 0 0 30px #00bcd4; /* Enhanced Glow effect */
+        }
+
+        /* Responsive font size for particles */
+        @media (min-width: 768px) {
+            .arc-reactor-particle {
+                font-size: 8rem; /* Increased larger size on desktop */
+            }
+        }
+        /* Mobile-specific adjustments for header and text */
+        @media (max-width: 767px) {
+            header {
+                flex-direction: column; /* Force column layout on mobile */
+                align-items: center;    /* Center items horizontally in column layout */
+            }
+            h1 {
+                font-size: 4.5rem; /* Larger font size for header on mobile */
+                line-height: 1.1; /* Adjust line height for better fit */
+            }
+            main p {
+                font-size: 1.5rem; /* Larger font size for main paragraph on mobile */
+            }
+            .perks ul li {
+                font-size: 1.2rem; /* Larger font size for perks list items on mobile */
+            }
+            .arc-reactor-particle {
+                font-size: 4rem; /* Slightly smaller particles on mobile to avoid clutter */
+            }
+        }
+
+        /* Quote transition styles */
+        .quote-transition {
+            transition: opacity 0.5s ease-in-out; /* Smooth fade transition */
+        }
+        .quote-hidden {
+            opacity: 0;
+        }
+
+        /* Stylish font and glow for the main title */
+        .stark-title {
+            font-family: 'Orbitron', sans-serif; /* Apply Orbitron font */
+            color: #E0F7FA; /* Bright, light cyan color for better visibility */
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.8), /* Light blue glow */
+                         0 0 20px rgba(76, 201, 240, 0.6),
+                         0 0 30px rgba(76, 201, 240, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <!-- Arc Reactor Particles Container -->
+    <div id="arc-reactor-particles" class="fixed inset-0 z-0 pointer-events-none overflow-hidden"></div>
+
+    <div class="container mx-auto px-4 py-12 flex flex-col items-center justify-center min-h-screen relative z-10">
+        <!-- Header Section -->
+        <header class="flex md:flex-row items-center justify-center text-center mb-12 animate-fadeIn">
+            <img width="120" height="120" src="https://img.icons8.com/clouds/100/iron-man.png" alt="iron-man" class="mb-4 md:mb-0 md:mr-6 animate-scaleIn delay-200"/>
+            <h1 class="text-5xl md:text-6xl font-extrabold leading-tight animate-slideInUp delay-400 stark-title">
+                Pepperony X-Pense Tracker
+            </h1>
+        </header>
+
+        <!-- Main Content Section -->
+        <main class="bg-gray-800 bg-opacity-70 backdrop-blur-sm rounded-3xl shadow-2xl p-8 md:p-12 max-w-3xl w-full text-center animate-slideInUp delay-600">
+            <p class="text-xl md:text-2xl mb-8 leading-relaxed font-light">
+                Unlock the full potential of your financial tracking with our innovative expense tracker. Manage your finances effortlessly and gain insights into your spending habits.
+            </p>
+            
+            <!-- Perks Section -->
+            <section class="mb-10 text-left">
+                <h2 class="text-3xl font-bold mb-6 text-blue-300 animate-fadeIn delay-800">Here are some of the perks:</h2>
+                <ul class="space-y-4 text-xl font-light">
+                    <li class="flex items-start transition-transform duration-200 hover:translate-x-1 animate-slideInUp delay-900">
+                        <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
+                        <span>Track personal and group expenses effortlessly.</span>
+                    </li>
+                    <li class="flex items-start transition-transform duration-200 hover:translate-x-1 animate-slideInUp delay-1000">
+                        <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
+                        <span>Settle debts with friends and family seamlessly.</span>
+                    </li>
+                    <li class="flex items-start transition-transform duration-200 hover:translate-x-1 animate-slideInUp delay-1100">
+                        <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
+                        <span>Visualize your spending with insightful charts.</span>
+                    </li>
+                    <li class="flex items-start transition-transform duration-200 hover:translate-x-1 animate-slideInUp delay-1200">
+                        <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
+                        <span>Get detailed monthly summaries and reports.</span>
+                    </li>
+                    <li class="flex items-start transition-transform duration-200 hover:translate-x-1 animate-slideInUp delay-1300">
+                        <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
+                        <span>Secure, private, and easy to use.</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Call to Action Button -->
+            <a href="https://starkxpense.web.app/" 
+               class="inline-flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-full shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 animate-scaleIn delay-1400">
+                <img width="24" height="24" src="https://img.icons8.com/bubbles/100/domain.png" alt="domain" class="mr-3"/> 
+                Go to Web App
+            </a>
+        </main>
+
+        <!-- Quote of the Day Section -->
+        <section class="mt-12 w-full max-w-3xl text-center animate-fadeIn delay-1500">
+            <div class="bg-gray-800 bg-opacity-70 backdrop-blur-sm rounded-3xl shadow-2xl p-8 md:p-10">
+                <h2 class="text-3xl font-bold mb-6 text-yellow-300">Tony's Wisdom</h2>
+                <blockquote id="quote-text" class="text-xl md:text-2xl italic text-gray-200 mb-4 quote-transition">
+                    "It's not about how much we lost. It's about how much we have left."
+                </blockquote>
+                <p id="quote-author" class="text-lg font-semibold text-gray-400 quote-transition">- Tony Stark (Avengers: Endgame)</p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="mt-12 w-full max-w-3xl text-center animate-fadeIn delay-1700">
+            <h2 class="text-3xl font-bold mb-6 text-purple-300">Contact My Owner</h2>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="https://wa.me/7428467665?text=Hello%20Tony,%20I%20would%20like%20to%20request%20a%20new%20account%20for%20the%20Pepperony%20X-Pense%20Tracker." 
+                   class="inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-400 focus:ring-opacity-50 animate-slideInUp delay-1800">
+                    <img width="24" height="24" src="https://img.icons8.com/clouds/100/whatsapp.png" alt="whatsapp" class="mr-3"/> 
+                    Contact via WhatsApp
+                </a>
+                <a href="mailto:info@pepperonyx.dpdns.org?subject=Request%20for%20Access&body=Hello%20Tony,%20I%20would%20like%20to%20request%20a%20new%20account%20for%20the%20Pepperony%20X-Pense%20Tracker." 
+                   class="inline-flex items-center justify-center bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-full shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-400 focus:ring-opacity-50 animate-slideInUp delay-1900">
+                    <img width="24" height="24" src="https://img.icons8.com/clouds/100/new-post.png" alt="new-post" class="mr-3"/> 
+                    Email My Owner
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <footer class="mt-12 py-6 text-center text-gray-400 animate-fadeIn delay-2000">
+            <p class="text-sm font-bold">Made with <i class="fas fa-heart text-red-500"></i> by 
+                <a href="https://linktr.ee/pepperonyx" class="text-blue-400 hover:text-blue-300 transition-colors duration-300" target="_blank" rel="noopener noreferrer">Gaurav</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Array of Tony Stark, JARVIS, and FRIDAY quotes
+        const quotes = [
+            {
+                quote: "It's not about how much we lost. It's about how much we have left.",
+                author: "Tony Stark (Avengers: Endgame)"
+            },
+            {
+                quote: "Genius, billionaire, playboy, philanthropist.",
+                author: "Tony Stark (The Avengers)"
+            },
+            {
+                quote: "I am Iron Man.",
+                author: "Tony Stark (Iron Man / Avengers: Endgame)"
+            },
+            {
+                quote: "Doth mother know you weareth her drapes?",
+                author: "Tony Stark (The Avengers)"
+            },
+            {
+                quote: "Sometimes you gotta run before you can walk.",
+                author: "Tony Stark (Iron Man)"
+            },
+            {
+                quote: "I'm a huge fan of the way you're not like me.",
+                author: "Tony Stark (Avengers: Age of Ultron)"
+            },
+            {
+                quote: "My analysis indicates a high probability of success.",
+                author: "JARVIS (Iron Man 3)"
+            },
+            {
+                quote: "The perimeter is secure, boss.",
+                author: "FRIDAY (Avengers: Age of Ultron)"
+            },
+            {
+                quote: "You are not authorized to access this area.",
+                author: "JARVIS (Iron Man)"
+            },
+            {
+                quote: "Boss, I'm detecting an anomaly.",
+                author: "FRIDAY (Captain America: Civil War)"
+            }
+        ];
+
+        let currentQuoteIndex = 0;
+        const quoteTextElement = document.getElementById('quote-text');
+        const quoteAuthorElement = document.getElementById('quote-author');
+
+        /**
+         * Updates the quote and author displayed on the page with a fade transition.
+         * Cycles through the 'quotes' array.
+         */
+        function updateQuote() {
+            // Add 'quote-hidden' class to start fade-out
+            quoteTextElement.classList.add('quote-hidden');
+            quoteAuthorElement.classList.add('quote-hidden');
+
+            setTimeout(() => {
+                // Get the current quote object
+                const quote = quotes[currentQuoteIndex];
+                
+                // Update the text content of the quote and author elements
+                quoteTextElement.textContent = `"${quote.quote}"`;
+                quoteAuthorElement.textContent = `- ${quote.author}`;
+                
+                // Remove 'quote-hidden' class to start fade-in
+                quoteTextElement.classList.remove('quote-hidden');
+                quoteAuthorElement.classList.remove('quote-hidden');
+
+                // Move to the next quote, loop back to the beginning if at the end
+                currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+            }, 500); // Half of the transition duration (0.5s)
+        }
+
+        // Set interval to change quote every 10 seconds (10000 milliseconds)
+        // Call updateQuote immediately to display the first quote
+        document.addEventListener('DOMContentLoaded', () => {
+            updateQuote(); // Display the first quote immediately
+            setInterval(updateQuote, 10000); // Change quote every 10 seconds
+
+            // Arc Reactor Particles Generation and Animation
+            const particlesContainer = document.getElementById('arc-reactor-particles');
+            const numberOfParticles = 20; // Adjust as needed
+
+            for (let i = 0; i < numberOfParticles; i++) {
+                const particle = document.createElement('span');
+                particle.classList.add('arc-reactor-particle');
+                particle.textContent = '⎊'; // Arc Reactor symbol
+
+                // Random initial position
+                const startX = Math.random() * 100; // % of viewport width
+                const startY = Math.random() * 100; // % of viewport height
+
+                // Random end position for movement
+                const endX = startX + (Math.random() - 0.5) * 80; // Increased movement range
+                const endY = startY + (Math.random() - 0.5) * 80; // Increased movement range
+
+                // Random animation duration and delay
+                const duration = 8 + Math.random() * 12; // Faster: 8-20 seconds
+                const delay = Math.random() * 5; // Shorter initial delay for quicker appearance
+
+                particle.style.left = `${startX}vw`;
+                particle.style.top = `${startY}vh`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.setProperty('--translate-x', `${(Math.random() - 0.5) * 150}px`); // Increased pixel translation
+                particle.style.setProperty('--translate-y', `${(Math.random() - 0.5) * 150}px`);
+                particle.style.setProperty('--translate-x-end', `${(Math.random() - 0.5) * 150}px`);
+                particle.style.setProperty('--translate-y-end', `${(Math.random() - 0.5) * 150}px`);
+                
+                particlesContainer.appendChild(particle);
+            }
+        });
+    </script>
+</body>
+</html>
