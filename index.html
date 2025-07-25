@@ -149,41 +149,48 @@
         }
         /* Mobile-specific adjustments for header and text */
         @media (max-width: 767px) {
+            .container {
+                padding-left: 0; /* Remove horizontal padding on mobile */
+                padding-right: 0; /* Remove horizontal padding on mobile */
+            }
             header {
                 flex-direction: column; /* Force column layout on mobile */
                 align-items: center;    /* Center items horizontally in column layout */
             }
             h1 {
-                font-size: 2.5rem; /* Adjusted font size for header on mobile */
+                font-size: 3.5rem; /* Larger font size for header on mobile */
                 line-height: 1.1; /* Adjust line height for better fit */
             }
+            main {
+                padding: 1.5rem; /* Reduce padding for main content on small screens */
+            }
             main p {
-                font-size: 1.1rem; /* Adjusted font size for main paragraph on mobile */
+                font-size: 1.25rem; /* Larger font size for main paragraph on mobile */
             }
             .perks ul li {
-                font-size: 1rem; /* Adjusted font size for perks list items on mobile */
+                font-size: 1.1rem; /* Larger font size for perks list items on mobile */
             }
             .arc-reactor-particle {
                 font-size: 4rem; /* Slightly smaller particles on mobile to avoid clutter */
             }
             /* Adjustments for Quote section on mobile */
             #quote-text {
-                font-size: 1.2rem; /* Adjusted font size for quote text on mobile */
+                font-size: 1.3rem; /* Adjusted font size for quote text on mobile */
             }
             #quote-author {
-                font-size: 0.9rem; /* Adjusted font size for quote author on mobile */
+                font-size: 1rem; /* Adjusted font size for quote author on mobile */
             }
             /* Adjustments for Contact section on mobile */
             .contact h2 {
-                font-size: 2rem; /* Adjusted font size for contact header on mobile */
+                font-size: 2.2rem; /* Adjusted font size for contact header on mobile */
             }
             .contact .button {
-                font-size: 0.9rem; /* Adjusted font size for contact buttons on mobile */
-                padding: 0.75rem 1.5rem; /* Adjusted padding for contact buttons on mobile */
+                font-size: 1rem; /* Adjusted font size for contact buttons on mobile */
+                padding: 0.8rem 1.8rem; /* Adjusted padding for contact buttons on mobile */
             }
             /* Adjustments for Footer on mobile */
             footer p {
-                font-size: 0.9rem; /* Adjusted font size for footer text on mobile */
+                font-size: 1rem; /* Adjusted font size for footer text on mobile */
             }
         }
 
@@ -210,7 +217,7 @@
     <!-- Arc Reactor Particles Container -->
     <div id="arc-reactor-particles" class="fixed inset-0 z-0 pointer-events-none overflow-hidden"></div>
 
-    <div class="container mx-auto px-4 py-12 flex flex-col items-center justify-center min-h-screen relative z-10">
+    <div class="container mx-auto px-0 sm:px-4 py-12 flex flex-col items-center justify-center min-h-screen relative z-10">
         <!-- Header Section -->
         <header class="flex flex-col md:flex-row items-center justify-center text-center mb-12 animate-fadeIn">
             <img width="120" height="120" src="https://img.icons8.com/clouds/100/iron-man.png" alt="iron-man" class="mb-4 md:mb-0 md:mr-6 animate-scaleIn delay-200"/>
