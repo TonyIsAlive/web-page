@@ -154,17 +154,36 @@
                 align-items: center;    /* Center items horizontally in column layout */
             }
             h1 {
-                font-size: 4.5rem; /* Larger font size for header on mobile */
+                font-size: 2.8rem; /* Adjusted font size for header on mobile */
                 line-height: 1.1; /* Adjust line height for better fit */
             }
             main p {
-                font-size: 1.5rem; /* Larger font size for main paragraph on mobile */
+                font-size: 1.1rem; /* Adjusted font size for main paragraph on mobile */
             }
             .perks ul li {
-                font-size: 1.2rem; /* Larger font size for perks list items on mobile */
+                font-size: 1rem; /* Adjusted font size for perks list items on mobile */
             }
             .arc-reactor-particle {
                 font-size: 4rem; /* Slightly smaller particles on mobile to avoid clutter */
+            }
+            /* Adjustments for Quote section on mobile */
+            #quote-text {
+                font-size: 1.2rem; /* Adjusted font size for quote text on mobile */
+            }
+            #quote-author {
+                font-size: 0.9rem; /* Adjusted font size for quote author on mobile */
+            }
+            /* Adjustments for Contact section on mobile */
+            .contact h2 {
+                font-size: 2rem; /* Adjusted font size for contact header on mobile */
+            }
+            .contact .button {
+                font-size: 0.9rem; /* Adjusted font size for contact buttons on mobile */
+                padding: 0.75rem 1.5rem; /* Adjusted padding for contact buttons on mobile */
+            }
+            /* Adjustments for Footer on mobile */
+            footer p {
+                font-size: 0.9rem; /* Adjusted font size for footer text on mobile */
             }
         }
 
@@ -193,7 +212,7 @@
 
     <div class="container mx-auto px-4 py-12 flex flex-col items-center justify-center min-h-screen relative z-10">
         <!-- Header Section -->
-        <header class="flex md:flex-row items-center justify-center text-center mb-12 animate-fadeIn">
+        <header class="flex flex-col md:flex-row items-center justify-center text-center mb-12 animate-fadeIn">
             <img width="120" height="120" src="https://img.icons8.com/clouds/100/iron-man.png" alt="iron-man" class="mb-4 md:mb-0 md:mr-6 animate-scaleIn delay-200"/>
             <h1 class="text-5xl md:text-6xl font-extrabold leading-tight animate-slideInUp delay-400 stark-title">
                 Pepperony X-Pense Tracker
